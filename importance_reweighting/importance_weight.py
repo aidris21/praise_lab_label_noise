@@ -6,7 +6,7 @@ def importance_weight(
 )-> float:
     """
     Return the importance weight for a given instance in the observed dataset.
-    see: https://arxiv.org/pdf/1411.7718.pdf
+    see: https://ieeexplore.ieee.org/abstract/document/7159100/media#media
 
         Parameters:
                     positive_noise_rate (float): The probability that the observed label in the dataset is positive, given the true label is negative
