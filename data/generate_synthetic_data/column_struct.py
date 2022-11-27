@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field
-from distributions import ProbabilityDistribution, NormalDistribution
+from dataclasses import dataclass
+from .distributions import ProbabilityDistribution, NormalDistribution
 from constants import PANDAS_DATATYPES
 
 @dataclass
@@ -17,11 +17,11 @@ class ColumnStruct:
         Probability Distribution used to generate data for the column
     """
 
-    name: str = field(init=None)
+    name: str = None
 
-    datatype: str = field(init='object')
+    datatype: str = 'object'
 
-    distribution: ProbabilityDistribution = field(init=NormalDistribution)
+    distribution: ProbabilityDistribution = NormalDistribution
 
     def __post_init__(self):
         assert self.datatype in PANDAS_DATATYPES, f"Datatype {self.datatype} is not a valid Pandas column datatype"

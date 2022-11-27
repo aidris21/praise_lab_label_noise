@@ -42,7 +42,7 @@ class ProbabilityDistribution:
 class NormalDistribution(ProbabilityDistribution):
 
     def __init__(self, mean=0, stddev=1):
-        super(name='normal')
+        super().__init__(name='normal')
         self.mean = mean
         self.standard_deviation = stddev
         self.variance = self.standard_deviation**2

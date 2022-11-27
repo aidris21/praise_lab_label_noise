@@ -1,5 +1,5 @@
 from typing import List, Dict
-from column_struct import ColumnStruct
+from .column_struct import ColumnStruct
 import pandas as pd
 
 class SyntheticDataFrame:
