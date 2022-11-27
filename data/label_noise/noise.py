@@ -4,7 +4,7 @@ def add_noise_to_labels(labels: np.ndarray, noise_rates) -> np.ndarray:
     """
     Returns a numpy array with noise added to the given label array. If more than two classes are present
     in the labels, the probability that an output label is any class other than its true class given that
-    it has been flipped is assumed to be uniform among all classes.
+    it has been flipped is will be uniform among all classes.
 
     Parameters:
                     labels (np.ndarray): An array of observed labels
