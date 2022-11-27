@@ -53,7 +53,7 @@ class NormalDistribution(ProbabilityDistribution):
     def c_x(self, x: float) -> float:
         return norm.cdf(x=x, loc=self.mean, scale=self.standard_deviation)
 
-    def draw(n: int):
+    def draw(self, n: int):
         return np.random.normal(loc=self.mean, scale=self.standard_deviation, size=n)
 
     

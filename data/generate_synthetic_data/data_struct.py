@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from distributions import ProbabilityDistribution, NormalDistribution
+from constants import PANDAS_DATATYPES
 
 @dataclass
 class ColumnStruct:
@@ -21,4 +22,7 @@ class ColumnStruct:
     datatype: str = field(init='object')
 
     distribution: ProbabilityDistribution = NormalDistribution
+
+    def __post_init__(self):
+        assert self.datatype in PANDAS_DATATYPES, f"Datatype {self.datatype} is not a valid Pandas column datatype"
     
