@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from abc import abstractmethod
 from typing import List
+import numpy as np
+from scipy.stats import norm
 
 class ProbabilityDistribution:
     """
@@ -30,8 +32,28 @@ class ProbabilityDistribution:
         pass
 
     @abstractmethod
-    def draw(self, n: int) -> List[float]:
+    def draw(self, n: int):
         """
         Draws `n` random samples from our specified probability distribution
         """
         pass
+
+
+class NormalDistribution(ProbabilityDistribution):
+
+    def __init__(self, mean=0, stddev=1):
+        super(name='normal')
+        self.mean = mean
+        self.standard_deviation = stddev
+        self.variance = self.standard_deviation**2
+
+    def p_x(self, x: float) -> float:
+        norm.pdf(x=x, loc=self.mean, scale=self.standard_deviation)
+
+    def c_x(self, x: float) -> float:
+        return norm.cdf(x=x, loc=self.mean, scale=self.standard_deviation)
+
+    def draw(n: int):
+        return np.random.normal(loc=self.mean, scale=self.standard_deviation, size=n)
+
+    
