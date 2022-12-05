@@ -24,12 +24,3 @@ class TestSyntheticDataFrame(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    df: SyntheticDataFrame = SyntheticDataFrame(
-        schema = [
-            ColumnStruct(name='foo', datatype='float64', distribution=NormalDistribution()),
-            ColumnStruct(name='bar', datatype='float64', distribution=NormalDistribution(mean=10, stddev=5)),
-        ],
-        sample_size=10
-    )
-    print(df.head())
-    print("hello")
