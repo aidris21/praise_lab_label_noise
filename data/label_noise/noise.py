@@ -1,5 +1,11 @@
 import numpy as np
 
+def matrix_to_array(M) -> np.ndarray:
+    """
+    see https://stackoverflow.com/questions/3337301/numpy-matrix-to-array
+    """
+    return np.squeeze(np.asarray(M))
+
 def add_noise_to_labels(labels: np.ndarray, noise_rates) -> np.ndarray:
     """
     Returns a numpy array with noise added to the given label array. If more than two classes are present
@@ -10,7 +16,8 @@ def add_noise_to_labels(labels: np.ndarray, noise_rates) -> np.ndarray:
                     labels (np.ndarray): An array of observed labels
                     noise_rates (dict): A dictionary specifying a mapping from the unique label values
                     to the noise rates for that value. If any values present in `labels` is missing
-                    from the dict, a noise rate of 0 will be assumed for those values.
+                    from the dict, a noise rate of 0 will be assumed for those values. Noise rate is assumed
+                    to be the P(Y^ /= y|Y=y) where Y^ is the observed label, and Y is the true label.
     """
 
     label_classes, label_encoding = np.unique(labels, return_inverse=True)
@@ -25,12 +32,14 @@ def add_noise_to_labels(labels: np.ndarray, noise_rates) -> np.ndarray:
         flip_series_list.append(flip_indicator)
 
 
-    flip_indicator_array = np.matmul(np.matrix(flip_series_list), np.ones(m))
-    flip_amount_array = np.multiply(np.random.randint(low=1, high=m, size=n), flip_indicator_array)
+    flip_indicator_array: np.ndarray = matrix_to_array(
+        np.matmul(np.matrix(flip_series_list).transpose(), np.ones(m))
+    )
+    flip_amount_array: np.ndarray = np.multiply(np.random.randint(low=1, high=m, size=n), flip_indicator_array)
 
     noisy_label_encoding = np.mod(np.add(label_encoding, flip_amount_array), m)
 
-    return label_classes[noisy_label_encoding]
+    return label_classes[noisy_label_encoding.astype(int)]
 
     
 

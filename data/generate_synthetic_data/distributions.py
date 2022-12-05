@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from abc import abstractmethod
 from typing import List
 import numpy as np
-from scipy.stats import norm
+from scipy.stats import norm, bernoulli
 
 class ProbabilityDistribution:
     """
@@ -48,12 +48,26 @@ class NormalDistribution(ProbabilityDistribution):
         self.variance = self.standard_deviation**2
 
     def p_x(self, x: float) -> float:
-        norm.pdf(x=x, loc=self.mean, scale=self.standard_deviation)
+        return norm.pdf(x=x, loc=self.mean, scale=self.standard_deviation)
 
     def c_x(self, x: float) -> float:
         return norm.cdf(x=x, loc=self.mean, scale=self.standard_deviation)
 
     def draw(self, n: int):
         return np.random.normal(loc=self.mean, scale=self.standard_deviation, size=n)
+
+class BernoulliDistribution(ProbabilityDistribution):
+    def __init__(self, p=0.5):
+        super().__init__(name='bernoulli')
+        self.p = p
+        
+    def p_x(self, x: float) -> float:
+        return bernoulli.pmf(k=x, p=self.p)
+
+    def c_x(self, x: float) -> float:
+        return bernoulli.cdf(k=x, p=self.p)
+
+    def draw(self, n: int):
+        return np.random.binomial(n=1, p=self.p, size=n)
 
     
