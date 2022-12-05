@@ -1,5 +1,11 @@
 import numpy as np
 
+def matrix_to_array(M) -> np.ndarray:
+    """
+    see https://stackoverflow.com/questions/3337301/numpy-matrix-to-array
+    """
+    return np.squeeze(np.asarray(M))
+
 def add_noise_to_labels(labels: np.ndarray, noise_rates) -> np.ndarray:
     """
     Returns a numpy array with noise added to the given label array. If more than two classes are present
@@ -25,12 +31,14 @@ def add_noise_to_labels(labels: np.ndarray, noise_rates) -> np.ndarray:
         flip_series_list.append(flip_indicator)
 
 
-    flip_indicator_array = np.matmul(np.matrix(flip_series_list), np.ones(m))
-    flip_amount_array = np.multiply(np.random.randint(low=1, high=m, size=n), flip_indicator_array)
+    flip_indicator_array: np.ndarray = matrix_to_array(
+        np.matmul(np.matrix(flip_series_list).transpose(), np.ones(m))
+    )
+    flip_amount_array: np.ndarray = np.multiply(np.random.randint(low=1, high=m, size=n), flip_indicator_array)
 
     noisy_label_encoding = np.mod(np.add(label_encoding, flip_amount_array), m)
 
-    return label_classes[noisy_label_encoding]
+    return label_classes[noisy_label_encoding.astype(int)]
 
     
 
