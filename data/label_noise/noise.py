@@ -16,7 +16,8 @@ def add_noise_to_labels(labels: np.ndarray, noise_rates) -> np.ndarray:
                     labels (np.ndarray): An array of observed labels
                     noise_rates (dict): A dictionary specifying a mapping from the unique label values
                     to the noise rates for that value. If any values present in `labels` is missing
-                    from the dict, a noise rate of 0 will be assumed for those values.
+                    from the dict, a noise rate of 0 will be assumed for those values. Noise rate is assumed
+                    to be the P(Y^ /= y|Y=y) where Y^ is the observed label, and Y is the true label.
     """
 
     label_classes, label_encoding = np.unique(labels, return_inverse=True)

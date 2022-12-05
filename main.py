@@ -48,3 +48,5 @@ if __name__ == '__main__':
     }
     syn_df_noisy = syn_df.copy(deep=True)
     syn_df_noisy[LABEL_COLUMN_NAME] = add_noise_to_labels(labels=syn_df_noisy[LABEL_COLUMN_NAME], noise_rates=noise_rates)
+
+    
